@@ -3,6 +3,8 @@
 // used: callvfunc
 #include "..\..\utils\memory\vfunc\vfunc.h"
 #include <type_traits>
+#include "..\..\utils\math\vector\vector.h" // <- necessário para QAngle_t
+
 class IEngineClient
 {
 public:
@@ -26,9 +28,12 @@ public:
 		M::vfunc<void, 49U>(this, std::ref(nIndex), 0);
 		return nIndex + 1;
 	}
-public:
+
+	void get_view_angles(QAngle_t& viewAngles) {
+		M::vfunc<void, 19U>(this, std::ref(viewAngles));
+	}
+
 	inline bool valid() {
 		return connected() && in_game();
 	}
-
 };
