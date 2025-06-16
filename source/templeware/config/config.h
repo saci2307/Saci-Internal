@@ -16,7 +16,11 @@ namespace Config {
 	extern ImVec4 espColor;
 	extern bool showNameTags;
 	extern bool Radar;
-	
+	extern bool Triggerbot;
+	extern int Triggerbotkey;
+	extern int Triggerdelay;
+
+
 	extern bool Night;
 	extern ImVec4 NightColor;
 

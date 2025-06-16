@@ -117,10 +117,10 @@ void Menu::render() {
 
         ImGui::Separator();
 
-        const char* tabNames[] = { "Visuals", "Config" };
+        const char* tabNames[] = { "Visuals","Triggerbot", "Config" };
 
         if (ImGui::BeginTabBar("MainTabBar", ImGuiTabBarFlags_NoTooltip)) {
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 3; i++) {
                 if (ImGui::BeginTabItem(tabNames[i])) {
                     activeTab = i;
                     ImGui::EndTabItem();
@@ -187,6 +187,39 @@ void Menu::render() {
         break;
 
         case 1:
+        {
+            ImGui::Spacing();
+            ImGui::Text("Triggerbot");
+            ImGui::Separator();
+
+            ImGui::Checkbox("Enable Triggerbot", &Config::Triggerbot);
+
+            static const char* keyNames[] = { "LMB", "RMB", "ALT", "SHIFT", "CTRL" };
+            static int selectedKey = 2;  // Default ALT (VK_MENU)
+
+            // Atualiza o selectedKey de acordo com o valor atual de Config::Triggerbotkey
+            if (Config::Triggerbotkey == VK_LBUTTON) selectedKey = 0;
+            else if (Config::Triggerbotkey == VK_RBUTTON) selectedKey = 1;
+            else if (Config::Triggerbotkey == VK_MENU) selectedKey = 2;
+            else if (Config::Triggerbotkey == VK_SHIFT) selectedKey = 3;
+            else if (Config::Triggerbotkey == VK_CONTROL) selectedKey = 4;
+
+            if (ImGui::Combo("Trigger Key", &selectedKey, keyNames, IM_ARRAYSIZE(keyNames))) {
+                // Quando mudar o valor no combo, atualiza o Config::Triggerbotkey
+                switch (selectedKey)
+                {
+                case 0: Config::Triggerbotkey = VK_LBUTTON; break;
+                case 1: Config::Triggerbotkey = VK_RBUTTON; break;
+                case 2: Config::Triggerbotkey = VK_MENU; break;
+                case 3: Config::Triggerbotkey = VK_SHIFT; break;
+                case 4: Config::Triggerbotkey = VK_CONTROL; break;
+                }
+            }
+
+            ImGui::SliderInt("Trigger Delay (ms)", &Config::Triggerdelay, 0, 300);
+        }
+
+        case 2:
         {
             ImGui::BeginChild("ConfigLeft", ImVec2(ImGui::GetContentRegionAvail().x * 0.5f - 5, 0), true);
             ImGui::Text("General");

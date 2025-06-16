@@ -21,11 +21,9 @@ namespace Config {
 	bool teamChamsInvisible = false;
 	int chamsMaterial = 0;
 
-
-	bool armChams = false;
-	bool viewmodelChams = false;
-	ImVec4 colViewmodelChams = ImVec4(1, 0, 0, 1);
-	ImVec4 colArmChams = ImVec4(1, 0, 0, 1);
+	inline bool Triggerbot = false;         
+    inline int Triggerbotkey = VK_MENU;        
+    inline int Triggerdelay = 50;               
 
 	ImVec4 colVisualChams = ImVec4(1, 0, 0, 1);
 	ImVec4 colVisualChamsIgnoreZ = ImVec4(1, 0, 0, 1);
