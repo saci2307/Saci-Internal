@@ -12,8 +12,7 @@ namespace Config {
 	bool teamCheck = false;
 	bool espFill = false;
 	bool showNameTags = false;
-	bool Radar = false;	
-	bool Bombinfo = false;	
+	bool Radar = false;		
 	bool Night = false;
 
 	bool enemyChamsInvisible = false;

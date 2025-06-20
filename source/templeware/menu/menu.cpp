@@ -151,7 +151,6 @@ void Menu::render() {
             ImGui::Checkbox("Name Tags", &Config::showNameTags);
 
             ImGui::Checkbox("RadarHack", &Config::Radar);
-            ImGui::Checkbox("Bombinfo", &Config::Bombinfo);
             ImGui::Spacing();
             ImGui::Text("World");
             ImGui::Separator();

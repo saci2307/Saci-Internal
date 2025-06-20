@@ -172,7 +172,6 @@
     <ClCompile Include="source\templeware\features\trigger\trigger.cpp" />
     <ClCompile Include="source\templeware\features\radar\radar.cpp" />
     <ClCompile Include="source\templeware\features\chams\chams.cpp" />
-    <ClCompile Include="source\templeware\features\visuals\bomb\bombinfo.cpp" />
     <ClCompile Include="source\templeware\features\visuals\fov\fov.cpp" />
     <ClCompile Include="source\templeware\interfaces\CGameEntitySystem\CGameEntitySystem.cpp" />
     <ClCompile Include="source\templeware\interfaces\interfaces.cpp" />
@@ -230,7 +229,6 @@
     <ClInclude Include="source\templeware\features\trigger\trigger.h" />
     <ClInclude Include="source\templeware\features\trigger\trigger_utils.h" />
     <ClInclude Include="source\templeware\features\radar\radar.h" />
-    <ClCompile Include="source\templeware\features\visuals\bomb\bombinfo.h" />
     <ClInclude Include="source\templeware\interfaces\CGameEntitySystem\CGameEntitySystem.h" />
     <ClInclude Include="source\templeware\interfaces\IEngineClient\IEngineClient.h" />
     <ClInclude Include="source\templeware\interfaces\interfaces.h" />

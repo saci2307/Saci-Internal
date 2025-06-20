@@ -10,7 +10,6 @@
 #include "../../config/config.h"
 #include "../../menu/menu.h"
 #include "../../offsets/offsets.h"
-#include "bomb/bombinfo.h"
 using namespace Esp;
 
 LocalPlayerCached cached_local;
@@ -139,11 +138,9 @@ void Esp::cache()
 
 void Visuals::esp() {
     // Only proceed if at least one ESP component is enabled
-    if (!Config::esp && !Config::showHealth && !Config::espFill && !Config::showNameTags && !Config::Bombinfo) {
+    if (!Config::esp && !Config::showHealth && !Config::espFill && !Config::showNameTags) {
         return; // Exit early if no component is enabled
-    }
-    if (Config::Bombinfo) {
-        }
+    }   
     //@better example of getting locsal pawn
     C_CSPlayerPawn* localPawn = H::oGetLocalPlayer(0);
     if (!localPawn) {
