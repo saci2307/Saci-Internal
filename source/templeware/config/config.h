@@ -1,6 +1,6 @@
 #pragma once
 #include "../../../external/imgui/imgui.h"
-
+#include <Windows.h>
 // CBA to make proper atm, it's 03:42 right now.
 // For now just stores config values don't mind it too much
 //
@@ -16,6 +16,7 @@ namespace Config {
 	extern ImVec4 espColor;
 	extern bool showNameTags;
 	extern bool Radar;
+	extern bool Bombinfo;
 	extern bool Triggerbot;
 	extern int Triggerbotkey;
 	extern int Triggerdelay;
@@ -43,15 +44,7 @@ namespace Config {
 	extern bool fovEnabled;
 	extern float fov;
 
-	extern bool antiflash;
-
 	extern bool Night;
-
-	extern bool target_teammates;
-	extern bool aimbot;
-	extern float aimbot_fov;
 	extern bool team_check;
-	extern bool rcs;
-	extern bool fov_circle;
-	extern ImVec4 fovCircleColor;
+
 }

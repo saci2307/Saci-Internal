@@ -1,5 +1,8 @@
 #include "debug/debug.h"
 
+
+#include "templeware/features/radar/radar.h"
+#include "templeware/features/trigger/trigger.h"
 #include "includes.h"
 #include "templeware/templeware.h"
 #include "templeware/renderer/icons.h"
@@ -69,6 +72,7 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
     if (GetAsyncKeyState(VK_END) & 1) {
         templeWare.renderer.menu.toggleMenu();
     }
+    UpdateTriggerToggle();
 
     templeWare.renderer.menu.render();
     templeWare.renderer.hud.render();
@@ -76,6 +80,8 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
     // Always call esp() to allow individual components to be rendered
     templeWare.renderer.visuals.esp();
 
+    TriggerbotIndicator();
+	Radar::Render();
     ImGui::Render();
     pContext->OMSetRenderTargets(1, &mainRenderTargetView, NULL);
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
@@ -94,23 +100,14 @@ void init_console() {
         SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
         printf(R"(
 
-              /\‚                     /\ ‚                              /\    '‚           /\‚                                       /\                /¯¯¯\ '           '|\¯¯¯¯¯¯\ ‘             
-            /    \‚                 /    \   ‚                        /    \     °      /    \‚                                   /    \            /         \‚          '|:|            \        '    
-           |\      \              /      /|                          |\      \     '   /      /|                                  |\      \    °   /            '\°        '|:|              \'          
-    /¯¯¯\|:|      |   °        |      |:'| /¯¯¯\‚          /¯¯¯\|:|      |‘      |      |:'|                           /¯¯¯\|:|      |'      |        |\      \°       \|                \   ‘     
-   |     |\ \/'     /|            |\      \/ /|      |'       /     /|\ \/     /|‘      |      |:'|                         /     /|\ \/     /|  '    |        |::\      \ '‚     |           |\     \       
-   |\     \:\__ /::|‘           |::\___/:/'     /|'     /     /::|::\__/::'|‘      |\      \/                       /     /::|::\__/::'|  '    |\       '\:::\      \ '    |           |::\     \     
-   |::\___¯¯¯¯¯\          /¯¯¯¯¯\/     /::|°  /     /::::|:::|::|:::'|‚      |::\      \                     |     |:::'|:::|::|:::|       |::\       '\::|      |     |           |::::\     \   
-   /¯¯¯¯\:\         \‚     /      /|        /::::|° |     |:::::/\::|::|:::/'  ‚    |:::|      |'                    |\     \:/\|\¯¯¯¯¯\‚     |::::\       '\|      |    /            \:::::|     |  
- /       /|\ \|         '|   /      /:/       /:::::/‘  |\     \::/ /¯¯¯¯¯¯¯\°   \:::|      |°                   |::\     \ |:|          \‚    \:::::\            /|  /          /|\   \::/     /|  
-|       |:'|::\_____'/|  |'      |/        |:::::/    |::\     \/  /|\           \‚    \/      /|                    |::::\     \/            \'‚    \:::::\____ /::| |\        /::|::\____ /::|'‚ 
-|\       \|:::|::::::::|:|  |\_____/|\     \::/'     |::::\___/::|::\         /|‘  /      /::|                     \:::::\___/|\         /|°     \::::|::::::|:::'| |::\    /::::|:::|::::::|:::'| °
-|::\     /|\::|::::::::|:|  |:|:::::::|:|::\    /|        \::::|::::|::'|::::\     /::|‘ |\    /::::|°                      \::::|::::|:|::\     /::|        \::|::::::|::/‘ '|::::\/::::::/\::|::::::|::/  '‚
-|::::\ /::|  \|::::::::|/‘  |:|:::::::|:|::::\/::|          \::|::::|::/\:::::\ /::::|  |::\/:::::/                          \::|::::|:|::::\ /::::|          \|::::::|/‘   ' \::::|::::/    \|::::::|/°    
- \::::|:::|    ¯¯¯¯°    '\|:::::::|/ \::::|::'|‘           \|::::|/    \::::|::::/   |:::|::::/ '‚                           \|::::|/ \::::|::::/‘            ¯¯¯'         \::|::/        ¯¯¯'       
-   \::|::/                   ¯¯¯¯     \::|::/              ¯¯        \::|::/      \::|::/                                 ¯¯    '\::|::/'‚              ‘                \|/‘                      
-     \|/                                   \|/                             '\|/          \|/                                             \|/'‚                           ‘ '                             
-
+                               /$$                 /$$                             /$$    
+                              |__/                | $$                            | $$    
+  /$$$$$$$  /$$$$$$   /$$$$$$$ /$$        /$$$$$$$| $$$$$$$   /$$$$$$   /$$$$$$  /$$$$$$  
+ /$$_____/ |____  $$ /$$_____/| $$       /$$_____/| $$__  $$ /$$__  $$ |____  $$|_  $$_/  
+|  $$$$$$   /$$$$$$$| $$      | $$      | $$      | $$  \ $$| $$$$$$$$  /$$$$$$$  | $$    
+ \____  $$ /$$__  $$| $$      | $$      | $$      | $$  | $$| $$_____/ /$$__  $$  | $$ /$$
+ /$$$$$$$/|  $$$$$$$|  $$$$$$$| $$      |  $$$$$$$| $$  | $$|  $$$$$$$|  $$$$$$$  |  $$$$/
+|_______/  \_______/ \_______/|__/       \_______/|__/  |__/ \_______/ \_______/   \___/  
 )");
 
         SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);

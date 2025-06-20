@@ -2,6 +2,7 @@
 #include "includeHooks.h"
 #include "../../cs2/entity/C_AggregateSceneObject/C_AggregateSceneObject.h"
 #include "../../cs2/entity/C_CSPlayerPawn/C_CSPlayerPawn.h"
+#include "../../cs2/entity/CCSPlayerController/CCSPlayerController.h"
 #include "../../cs2/datatypes/cutlbuffer/cutlbuffer.h"
 #include "../../cs2/datatypes/keyvalues/keyvalues.h"
 #include "../../cs2/entity/C_Material/C_Material.h"
@@ -28,7 +29,7 @@ namespace H {
 	inline int  oGetWeaponData;
 	inline void* (__fastcall* ogGetBaseEntity)(void*, int);
 	inline  C_CSPlayerPawn* (__fastcall* oGetLocalPlayer)(int);
-
+	inline CCSPlayerController* (__fastcall* oGetLocalController)(int);
 	class Hooks {
 	public:
 		void init();

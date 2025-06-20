@@ -3,6 +3,7 @@
 #include "..\..\..\cs2\entity\C_CSPlayerPawn\C_CSPlayerPawn.h"
 #include "..\..\..\cs2\entity\C_BaseEntity\C_BaseEntity.h"
 
+
 class LocalPlayerCached {
 public:
 	int handle;
@@ -50,7 +51,7 @@ namespace Esp {
 	public:
 		void init();
 		void esp();
-	private:
+	//private:
 		ViewMatrix viewMatrix;
 	};
 	void cache();
@@ -58,4 +59,3 @@ namespace Esp {
 
 extern LocalPlayerCached cached_local;
 extern std::vector<PlayerCache> cached_players;
-extern std::vector<Vector_t> c4DroppedPositions;

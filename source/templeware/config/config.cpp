@@ -13,6 +13,7 @@ namespace Config {
 	bool espFill = false;
 	bool showNameTags = false;
 	bool Radar = false;	
+	bool Bombinfo = false;	
 	bool Night = false;
 
 	bool enemyChamsInvisible = false;
@@ -21,9 +22,9 @@ namespace Config {
 	bool teamChamsInvisible = false;
 	int chamsMaterial = 0;
 
-	inline bool Triggerbot = false;         
-    inline int Triggerbotkey = VK_MENU;        
-    inline int Triggerdelay = 50;               
+	bool Triggerbot = false;         
+    int Triggerbotkey = VK_MENU;        
+    int Triggerdelay = 50;               
 
 	ImVec4 colVisualChams = ImVec4(1, 0, 0, 1);
 	ImVec4 colVisualChamsIgnoreZ = ImVec4(1, 0, 0, 1);
@@ -36,15 +37,7 @@ namespace Config {
 
 	bool fovEnabled = false;
 	float fov = 90.0f;
-
-	bool antiflash = false;
 	
 	bool team_check = false;
 	ImVec4 NightColor = ImVec4(0.1, 0.1, 0.1, 1);
-	bool target_teammates = false;
-	bool aimbot = 0;
-	float aimbot_fov = 0;
-	bool rcs = 0;
-	bool fov_circle = 0;
-	ImVec4 fovCircleColor = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 }

@@ -17,7 +17,10 @@ C:\Users\Gabriel\Downloads\Saci-Internal\source\cs2\datatypes\schema\ISchemaClas
 C:\Users\Gabriel\Downloads\Saci-Internal\source\cs2\entity\CCSPlayerController\CCSPlayerController.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\CCSPlayerController.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\cs2\entity\C_CSPlayerPawn\C_CSPlayerPawn.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\C_CSPlayerPawn.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\cs2\entity\C_CSWeaponBase\C_CSWeaponBase.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\C_CSWeaponBase.obj
+C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\features\trigger\trigger.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\trigger.obj
+C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\features\radar\radar.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\radar.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\features\chams\chams.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\chams.obj
+C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\features\visuals\bomb\bombinfo.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\bombinfo.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\features\visuals\fov\fov.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\fov.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\interfaces\CGameEntitySystem\CGameEntitySystem.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\CGameEntitySystem.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\interfaces\interfaces.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\interfaces.obj
@@ -41,3 +44,4 @@ C:\Users\Gabriel\Downloads\Saci-Internal\source\main.cpp;C:\Users\Gabriel\Downlo
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\menu\menu.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\menu.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\features\visuals\visuals.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\visuals.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\utils\schema\schema.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\schema.obj
+C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\features\visuals\bomb\bombinfo.h;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\bombinfo.h.obj

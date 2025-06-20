@@ -9,10 +9,6 @@
 Keybind::Keybind(bool& v, int k)
     : var(v), key(k), isListening(false), skipFrame(false) {}
 
-Keybinds::Keybinds() {
-    keybinds.emplace_back(Keybind(Config::aimbot, VK_XBUTTON1));
-}
-
 void Keybinds::pollInputs() {
     for (Keybind& k : keybinds) {
         if (k.key != 0 && (GetAsyncKeyState(k.key) & 0x1)) {
@@ -92,3 +88,6 @@ void Keybinds::menuButton(bool& var) {
 
 
 Keybinds keybind;
+Keybinds::Keybinds() {
+    keybinds.emplace_back(Config::Triggerbot, Config::Triggerbotkey);
+}

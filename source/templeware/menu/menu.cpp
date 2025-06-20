@@ -151,6 +151,7 @@ void Menu::render() {
             ImGui::Checkbox("Name Tags", &Config::showNameTags);
 
             ImGui::Checkbox("RadarHack", &Config::Radar);
+            ImGui::Checkbox("Bombinfo", &Config::Bombinfo);
             ImGui::Spacing();
             ImGui::Text("World");
             ImGui::Separator();
@@ -217,6 +218,7 @@ void Menu::render() {
             }
 
             ImGui::SliderInt("Trigger Delay (ms)", &Config::Triggerdelay, 0, 300);
+            break;
         }
 
         case 2:

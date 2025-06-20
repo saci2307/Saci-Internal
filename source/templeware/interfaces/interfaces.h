@@ -5,9 +5,10 @@
 #include "..\..\cs2\datatypes\cutlbuffer\cutlbuffer.h"
 #include "..\..\cs2\datatypes\keyvalues\keyvalues.h"
 #include "..\..\cs2\entity\C_Material\C_Material.h"
-
+#include "IGlobalVars/IGlobalVars.h"
 namespace I
 {
+	extern IGlobalVars* GlobalVars;
 	inline void(__fastcall* EnsureCapacityBuffer)(CUtlBuffer*, int) = nullptr;
 	inline CUtlBuffer* (__fastcall* ConstructUtlBuffer)(CUtlBuffer*, int, int, int) = nullptr;
 	inline void(__fastcall* PutUtlString)(CUtlBuffer*, const char*);
@@ -17,7 +18,7 @@ namespace I
 	// Logging functions
 	inline void(__fastcall* ConMsg)(const char*, ...);
 	inline void(__fastcall* ConColorMsg)(const Color&, const char*, ...);
-
+	
 	inline IEngineClient* EngineClient = nullptr;
 	inline IGameResourceService* GameEntity = nullptr;
 	class Interfaces {

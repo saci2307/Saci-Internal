@@ -1,26 +1,18 @@
-#include "../../../cs2/entity/C_CSPlayerPawn/C_CSPlayerPawn.h"
-#include "../../../templeware/interfaces/CGameEntitySystem/CGameEntitySystem.h"
-#include "../../../templeware/interfaces/interfaces.h"
+#include "trigger.h"
 #include "../../../templeware/config/config.h"
+#include "../../../templeware/interfaces/interfaces.h"
+#include "../../../cs2/entity/CCSPlayerController/CCSPlayerController.h"
+#include "../../../cs2/entity/C_CSPlayerPawn/C_CSPlayerPawn.h"
 #include "../../../templeware/utils/schema/schema.h"
-#include "../../../templeware/features/Trigger/trigger_utils.h"
+#include "../../../../external/imgui/imgui.h"
 
 #include <Windows.h>
-#include <chrono>
 #include <thread>
+#include <chrono>
 
-void Triggerbot()
-{
-    if (!Config::Triggerbot)
-        return;
 
-    if (!(GetAsyncKeyState(Config::Triggerbotkey) & 0x8000))
-        return;
-
-    C_CSPlayerPawn* localPlayer = nullptr;
+CCSPlayerController* GetLocalControllerByIteration() {
     int maxEntities = I::GameEntity->Instance->GetHighestEntityIndex();
-
-    int localTeam = -1;
 
     for (int i = 1; i <= maxEntities; i++) {
         auto ent = I::GameEntity->Instance->Get(i);
@@ -32,50 +24,104 @@ void Triggerbot()
         if (!classInfo)
             continue;
 
-        if (HASH(classInfo->szName) != HASH("C_CSPlayerPawn"))
-            continue;
-
-        auto pawn = reinterpret_cast<C_CSPlayerPawn*>(ent);
-        // Assume the first valid pawn is the local player and get its team
-        if (pawn->getHealth() > 0 /* add more checks if needed */) {
-            localTeam = pawn->getTeam();
-            localPlayer = pawn;
-            break;
+        if (HASH(classInfo->szName) == HASH("CCSPlayerController")) {
+            auto controller = reinterpret_cast<CCSPlayerController*>(ent);
+            if (controller->IsLocalPlayer())
+                return controller;
         }
     }
+    return nullptr;
+}
 
-    if (!localPlayer)
+void Triggerbot() {
+    if (!Config::Triggerbot || !triggerToggled)
         return;
 
-    int targetIndex = *(int*)((uintptr_t)localPlayer + SchemaFinder::Get(hash_32_fnv1a_const("C_CSPlayerPawn->m_iIDEntIndex")));
-    if (targetIndex <= 0 || targetIndex > maxEntities)
+    auto localController = GetLocalControllerByIteration();
+    if (!localController)
         return;
 
-    auto target = I::GameEntity->Instance->Get(targetIndex);
-    if (!target)
+    int pawnIndex = localController->m_hPawn().index();
+    if (pawnIndex <= 0 || pawnIndex > I::GameEntity->Instance->GetHighestEntityIndex())
+        return;
+
+    auto localPlayer = reinterpret_cast<C_CSPlayerPawn*>(I::GameEntity->Instance->Get(pawnIndex));
+    if (!localPlayer || localPlayer->getHealth() <= 0)
+        return;
+
+    int targetIndex = *(int*)((uintptr_t)localPlayer + 0x1458);
+    if (targetIndex <= 0 || targetIndex > I::GameEntity->Instance->GetHighestEntityIndex())
+        return;
+
+    auto targetEntity = I::GameEntity->Instance->Get(targetIndex);
+    if (!targetEntity)
         return;
 
     SchemaClassInfoData_t* classInfo = nullptr;
-    target->dump_class_info(&classInfo);
+    targetEntity->dump_class_info(&classInfo);
     if (!classInfo || HASH(classInfo->szName) != HASH("C_CSPlayerPawn"))
         return;
 
-    auto enemyPawn = reinterpret_cast<C_CSPlayerPawn*>(target);
-
-    if (enemyPawn->getHealth() <= 0)
+    auto targetPawn = reinterpret_cast<C_CSPlayerPawn*>(targetEntity);
+    if (targetPawn->getHealth() <= 0)
+        return;
+    if (targetPawn->getTeam() == localPlayer->getTeam())
         return;
 
-    if (enemyPawn->getTeam() == localPlayer->getTeam())
-        return;
+    if (Config::Triggerdelay > 0)
+        std::this_thread::sleep_for(std::chrono::milliseconds(Config::Triggerdelay));
 
-    // Disparo com SendInput
     INPUT input = {};
     input.type = INPUT_MOUSE;
     input.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
     SendInput(1, &input, sizeof(INPUT));
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(Config::Triggerdelay));
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
     input.mi.dwFlags = MOUSEEVENTF_LEFTUP;
     SendInput(1, &input, sizeof(INPUT));
 }
+
+void StartTriggerbotThread() {
+    std::thread([]() {
+        while (true) {
+            // Handle toggle key
+            bool keyDown = (GetAsyncKeyState(Config::Triggerbotkey) & 1);
+            if (keyDown && !lastKeyState) {
+                triggerToggled = !triggerToggled;
+            }
+            lastKeyState = keyDown;
+
+            Triggerbot();
+
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        }
+    }).detach();
+}
+
+bool triggerToggled = false;
+bool lastKeyState = false;
+
+void UpdateTriggerToggle() {
+    short keyState = GetAsyncKeyState(Config::Triggerbotkey) & 0x8000;
+
+    if (keyState && !lastKeyState) {
+        triggerToggled = !triggerToggled;
+    }
+
+    lastKeyState = keyState;
+}
+
+void TriggerbotIndicator() {
+    if (triggerToggled && Config::Triggerbot) {
+        ImDrawList* drawList = ImGui::GetBackgroundDrawList();
+
+        // Exemplo: canto superior esquerdo (x=10, y=10), cor vermelha
+        drawList->AddText(
+            ImVec2(10, 10),
+            IM_COL32(255, 0, 0, 255),
+            "T"
+        );
+    }
+}
+

@@ -10,8 +10,16 @@ Vector_t C_CSPlayerPawn::getPosition() const {
 }
 
 Vector_t C_CSPlayerPawn::getEyePosition() const {
-	return Vector_t();
+    uintptr_t gameSceneNode = *reinterpret_cast<uintptr_t*>(address + SchemaFinder::Get(hash_32_fnv1a_const("C_BaseEntity->m_pGameSceneNode")));
+    if (!gameSceneNode)
+        return Vector_t(0.f, 0.f, 0.f);
+
+    Vector_t origin = *reinterpret_cast<Vector_t*>(gameSceneNode + SchemaFinder::Get(hash_32_fnv1a_const("CGameSceneNode->m_vecAbsOrigin")));
+    Vector_t viewOffset = *reinterpret_cast<Vector_t*>(address + SchemaFinder::Get(hash_32_fnv1a_const("C_BaseModelEntity->m_vecViewOffset")));
+
+    return origin + viewOffset;
 }
+
 
 C_CSWeaponBase* C_CSPlayerPawn::GetActiveWeapon() const {
 	if (!this)
