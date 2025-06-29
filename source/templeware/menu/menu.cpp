@@ -8,6 +8,7 @@
 #include "../keybinds/keybinds.h"
 
 #include "../utils/logging/log.h"
+extern ID3D11Device* g_pd3dDevice;
 
 void ApplyImGuiTheme() {
     ImGui::StyleColorsDark();
@@ -88,9 +89,8 @@ void Menu::init(HWND& window, ID3D11Device* pDevice, ID3D11DeviceContext* pConte
     ImGui_ImplDX11_Init(pDevice, pContext);
 
     ApplyImGuiTheme();
-
+    g_pd3dDevice = pDevice;
     io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\arial.ttf", 16.0f);
-
     std::cout << "initialized menu\n";
 }
 
@@ -117,7 +117,7 @@ void Menu::render() {
 
         ImGui::Separator();
 
-        const char* tabNames[] = { "Visuals","Triggerbot", "Config" };
+        const char* tabNames[] = { "Visuals","Trigger", "Config" };
 
         if (ImGui::BeginTabBar("MainTabBar", ImGuiTabBarFlags_NoTooltip)) {
             for (int i = 0; i < 3; i++) {
@@ -151,20 +151,7 @@ void Menu::render() {
             ImGui::Checkbox("Name Tags", &Config::showNameTags);
 
             ImGui::Checkbox("RadarHack", &Config::Radar);
-            ImGui::Spacing();
-            ImGui::Text("World");
-            ImGui::Separator();
-
-            ImGui::Checkbox("Night Mode", &Config::Night);
-            if (Config::Night) {
-                ImGui::ColorEdit4("Night Color", (float*)&Config::NightColor);
-            }
-
-            ImGui::Checkbox("Custom FOV", &Config::fovEnabled);
-            if (Config::fovEnabled) {
-                ImGui::SliderFloat("FOV Value##FovSlider", &Config::fov, 20.0f, 160.0f, "%1.0f");
-            }
-
+            
             ImGui::EndChild();
 
             ImGui::SameLine();
@@ -182,6 +169,20 @@ void Menu::render() {
             if (Config::enemyChamsInvisible) {
                 ImGui::ColorEdit4("XQZ Color##ChamsXQZColor", (float*)&Config::colVisualChamsIgnoreZ);
             }
+            
+            ImGui::Spacing();
+            ImGui::Text("World");
+            ImGui::Separator();
+            ImGui::Checkbox("GrenadePrediction", &Config::GrenadePrediction);
+            ImGui::Checkbox("Night Mode", &Config::Night);
+            if (Config::Night) {
+                ImGui::ColorEdit4("Night Color", (float*)&Config::NightColor);
+            }
+
+            ImGui::Checkbox("Custom FOV", &Config::fovEnabled);
+            if (Config::fovEnabled) {
+                ImGui::SliderFloat("FOV Value##FovSlider", &Config::fov, 20.0f, 160.0f, "%1.0f");
+            }
             ImGui::EndChild();
         }
         break;
@@ -195,9 +196,8 @@ void Menu::render() {
             ImGui::Checkbox("Enable Triggerbot", &Config::Triggerbot);
 
             static const char* keyNames[] = { "LMB", "RMB", "ALT", "SHIFT", "CTRL" };
-            static int selectedKey = 2;  // Default ALT (VK_MENU)
+            static int selectedKey = 2; 
 
-            // Atualiza o selectedKey de acordo com o valor atual de Config::Triggerbotkey
             if (Config::Triggerbotkey == VK_LBUTTON) selectedKey = 0;
             else if (Config::Triggerbotkey == VK_RBUTTON) selectedKey = 1;
             else if (Config::Triggerbotkey == VK_MENU) selectedKey = 2;
@@ -205,7 +205,6 @@ void Menu::render() {
             else if (Config::Triggerbotkey == VK_CONTROL) selectedKey = 4;
 
             if (ImGui::Combo("Trigger Key", &selectedKey, keyNames, IM_ARRAYSIZE(keyNames))) {
-                // Quando mudar o valor no combo, atualiza o Config::Triggerbotkey
                 switch (selectedKey)
                 {
                 case 0: Config::Triggerbotkey = VK_LBUTTON; break;

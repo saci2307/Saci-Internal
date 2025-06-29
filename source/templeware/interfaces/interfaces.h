@@ -5,10 +5,10 @@
 #include "..\..\cs2\datatypes\cutlbuffer\cutlbuffer.h"
 #include "..\..\cs2\datatypes\keyvalues\keyvalues.h"
 #include "..\..\cs2\entity\C_Material\C_Material.h"
-#include "IGlobalVars/IGlobalVars.h"
+#include "IEngineTrace/IEngineTrace.h"
+
 namespace I
 {
-	extern IGlobalVars* GlobalVars;
 	inline void(__fastcall* EnsureCapacityBuffer)(CUtlBuffer*, int) = nullptr;
 	inline CUtlBuffer* (__fastcall* ConstructUtlBuffer)(CUtlBuffer*, int, int, int) = nullptr;
 	inline void(__fastcall* PutUtlString)(CUtlBuffer*, const char*);
@@ -21,6 +21,7 @@ namespace I
 	
 	inline IEngineClient* EngineClient = nullptr;
 	inline IGameResourceService* GameEntity = nullptr;
+	inline IEngineTrace* EngineTrace = nullptr;
 	class Interfaces {
 	public:
 		bool init();

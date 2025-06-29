@@ -1,7 +1,6 @@
 #include "debug/debug.h"
 
 
-#include "templeware/features/radar/radar.h"
 #include "templeware/features/trigger/trigger.h"
 #include "includes.h"
 #include "templeware/templeware.h"
@@ -9,7 +8,7 @@
 
 #include "../external/kiero/minhook/include/MinHook.h"
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
+ID3D11Device* g_pd3dDevice = nullptr;
 TempleWare templeWare;
 
 Present oPresent;
@@ -81,7 +80,6 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
     templeWare.renderer.visuals.esp();
 
     TriggerbotIndicator();
-	Radar::Render();
     ImGui::Render();
     pContext->OMSetRenderTargets(1, &mainRenderTargetView, NULL);
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());

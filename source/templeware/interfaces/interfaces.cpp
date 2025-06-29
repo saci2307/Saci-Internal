@@ -1,10 +1,9 @@
 #include "interfaces.h"
 #include "CGameEntitySystem/CGameEntitySystem.h"
-
+#include "IEngineTrace/IEngineTrace.h"
+#include "../utils/memory/gaa/gaa.h"
 // @used: I::Get<template>
 #include "../../templeware/utils/memory/Interface/Interface.h"
-#include "IGlobalVars/IGlobalVars.h"
-IGlobalVars* I::GlobalVars = nullptr;
 
 bool I::Interfaces::init()
 {
@@ -21,12 +20,8 @@ bool I::Interfaces::init()
     GameEntity = I::Get<IGameResourceService>("engine2.dll", "GameResourceServiceClientV00");
     success &= (GameEntity != nullptr);
 
-    // ✅ Inicialização de GlobalVars - (Substitua o pattern quando souber o correto)
-    I::GlobalVars = *reinterpret_cast<IGlobalVars**>(M::patternScan("client", "pattern_to_find_globalvars"));
-    if (!I::GlobalVars)
-        printf("[Interfaces] Falha ao localizar GlobalVars!\n");
-    else
-        printf("[Interfaces] GlobalVars localizado em: 0x%p\n", I::GlobalVars);
+    EngineTrace = I::Get<IEngineTrace>("engine2.dll", "EngineTraceClient004");
+    success &= (EngineTrace != nullptr);
 
     // Exports da tier0.dll
     ConstructUtlBuffer = reinterpret_cast<decltype(ConstructUtlBuffer)>(GetProcAddress(tier0_base, "??0CUtlBuffer@@QEAA@HHH@Z"));
@@ -40,7 +35,9 @@ bool I::Interfaces::init()
     // Debug info
     printf("[Interfaces] EngineClient: 0x%p\n", reinterpret_cast<void*>(EngineClient));
     printf("[Interfaces] GameEntity: 0x%p\n", reinterpret_cast<void*>(GameEntity));
+    printf("[Interfaces] EngineTrace: 0x%p\n", reinterpret_cast<void*>(EngineTrace));
     printf("[Interfaces] CreateMaterial: 0x%p\n", reinterpret_cast<void*>(CreateMaterial));
 
     return success;
 }
+

@@ -37,6 +37,13 @@ void Triggerbot() {
     if (!Config::Triggerbot || !triggerToggled)
         return;
 
+    static auto lastShotTime = std::chrono::steady_clock::now();
+    auto now = std::chrono::steady_clock::now();
+
+    // Cooldown entre disparos para evitar flood no SendInput
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(now - lastShotTime).count() < 100)
+        return;
+
     auto localController = GetLocalControllerByIteration();
     if (!localController)
         return;
@@ -68,18 +75,21 @@ void Triggerbot() {
     if (targetPawn->getTeam() == localPlayer->getTeam())
         return;
 
+    // Opcional: trigger delay antes do tiro (se quiser manter)
     if (Config::Triggerdelay > 0)
         std::this_thread::sleep_for(std::chrono::milliseconds(Config::Triggerdelay));
 
-    INPUT input = {};
-    input.type = INPUT_MOUSE;
-    input.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
-    SendInput(1, &input, sizeof(INPUT));
+    // Disparo otimizado (Down + Up no mesmo frame)
+    INPUT input[2] = {};
+    input[0].type = INPUT_MOUSE;
+    input[0].mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    input[1].type = INPUT_MOUSE;
+    input[1].mi.dwFlags = MOUSEEVENTF_LEFTUP;
 
-    input.mi.dwFlags = MOUSEEVENTF_LEFTUP;
-    SendInput(1, &input, sizeof(INPUT));
+    SendInput(2, input, sizeof(INPUT));
+
+    lastShotTime = now;
 }
 
 void StartTriggerbotThread() {
@@ -103,25 +113,34 @@ bool triggerToggled = false;
 bool lastKeyState = false;
 
 void UpdateTriggerToggle() {
-    short keyState = GetAsyncKeyState(Config::Triggerbotkey) & 0x8000;
-
-    if (keyState && !lastKeyState) {
+    short keyState = GetAsyncKeyState(Config::Triggerbotkey) & 1;
+    if (keyState)
         triggerToggled = !triggerToggled;
-    }
-
-    lastKeyState = keyState;
 }
+
 
 void TriggerbotIndicator() {
-    if (triggerToggled && Config::Triggerbot) {
-        ImDrawList* drawList = ImGui::GetBackgroundDrawList();
+    if (!(triggerToggled && Config::Triggerbot))
+        return;
 
-        // Exemplo: canto superior esquerdo (x=10, y=10), cor vermelha
-        drawList->AddText(
-            ImVec2(10, 10),
-            IM_COL32(255, 0, 0, 255),
-            "T"
-        );
-    }
+    ImDrawList* drawList = ImGui::GetForegroundDrawList();
+
+    ImVec2 barPos = ImVec2(250, 20);
+    ImVec2 barSize = ImVec2(110, 20);
+    ImU32 barColor = IM_COL32(255, 255, 0, 180); // amarelo suave com transparência
+
+    // Fundo da barra com cantos arredondados
+    drawList->AddRectFilled(barPos, ImVec2(barPos.x + barSize.x, barPos.y + barSize.y), barColor, 5.0f);
+
+    // Borda da barra
+    drawList->AddRect(barPos, ImVec2(barPos.x + barSize.x, barPos.y + barSize.y), IM_COL32(255, 0, 0, 255), 5.0f);
+
+    // Texto centralizado
+    const char* label = "Triggerbot ON";
+    ImVec2 textSize = ImGui::CalcTextSize(label);
+    ImVec2 textPos = ImVec2(
+        barPos.x + (barSize.x - textSize.x) * 0.5f,
+        barPos.y + (barSize.y - textSize.y) * 0.5f
+    );
+    drawList->AddText(textPos, IM_COL32(255, 255, 255, 255), label);
 }
-

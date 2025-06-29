@@ -15,7 +15,6 @@
 #include "../../cs2/datatypes/cutlbuffer/cutlbuffer.h"
 #include "../../cs2/datatypes/keyvalues/keyvalues.h"
 #include "../../cs2/entity/C_Material/C_Material.h"
-#include "../../templeware\features\radar\radar.h"
 #include "../config/config.h"
 #include "../interfaces/interfaces.h"
 

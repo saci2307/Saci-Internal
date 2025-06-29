@@ -10,6 +10,8 @@
 #include "../../config/config.h"
 #include "../../menu/menu.h"
 #include "../../offsets/offsets.h"
+#include "../Grenade/grenadeprediction.h"
+#include "../radar/radar.h"
 using namespace Esp;
 
 LocalPlayerCached cached_local;
@@ -18,6 +20,7 @@ std::vector<PlayerCache> cached_players;
 
 void Visuals::init() {
     viewMatrix.viewMatrix = (viewmatrix_t*)M::getAbsoluteAddress(M::patternScan("client", "48 8D 0D ? ? ? ? 48 C1 E0 06"), 3, 0);
+    Radar::LoadTextures();
 }
 
 void Esp::cache()
@@ -134,6 +137,8 @@ void Esp::cache()
             }
         }
     }
+    if (Config::GrenadePrediction)
+        GrenadePrediction::Simulate();
 }
 
 void Visuals::esp() {
@@ -147,6 +152,9 @@ void Visuals::esp() {
         return;
     }
 
+    if (Config::GrenadePrediction) {
+        GrenadePrediction::Draw();
+    }
     if (cached_players.empty())
         return;
 
@@ -243,6 +251,18 @@ void Visuals::esp() {
                 displayText.c_str()
             );
         }
+
+        C_CSPlayerPawn* localPawn = H::oGetLocalPlayer(0);
+        if (!localPawn)
+            return;
+
+        Vector_t localPos = localPawn->m_vOldOrigin();
+        float localYaw = localPawn->getEyePosition().y;  // Ou de onde você estiver pegando o viewangle/yaw do jogador local
+
+        if (Config::Radar) {
+            Radar::Draw(localPos, localYaw);
+        }
+
 
         if (Config::showNameTags) {
             std::string playerName = Player.name;

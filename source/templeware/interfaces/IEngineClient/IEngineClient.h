@@ -33,6 +33,11 @@ public:
 		M::vfunc<void, 19U>(this, std::ref(viewAngles));
 	}
 
+	const char* get_level_name() {
+		using Fn = const char* (__thiscall*)(void*);
+		return M::vfunc<Fn, 53U>(this)(this);
+	}
+
 	inline bool valid() {
 		return connected() && in_game();
 	}

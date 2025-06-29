@@ -19,6 +19,7 @@ C:\Users\Gabriel\Downloads\Saci-Internal\source\cs2\entity\C_CSPlayerPawn\C_CSPl
 C:\Users\Gabriel\Downloads\Saci-Internal\source\cs2\entity\C_CSWeaponBase\C_CSWeaponBase.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\C_CSWeaponBase.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\features\trigger\trigger.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\trigger.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\features\radar\radar.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\radar.obj
+C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\features\Grenade\grenadeprediction.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\grenadeprediction.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\features\chams\chams.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\chams.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\features\visuals\fov\fov.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\fov.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\interfaces\CGameEntitySystem\CGameEntitySystem.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\CGameEntitySystem.obj
@@ -36,6 +37,8 @@ C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\utils\math\viewmatrix
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\utils\memory\gaa\gaa.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\gaa.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\utils\memory\patternscan\patternscan.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\patternscan.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\utils\module\module.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\module.obj
+C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\utils\render\textureloader.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\textureloader.obj
+C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\utils\render\stb_image_impl.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\stb_image_impl.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\players\hook\playerHook.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\playerHook.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\players\players.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\players.obj
 C:\Users\Gabriel\Downloads\Saci-Internal\source\templeware\templeware.cpp;C:\Users\Gabriel\Downloads\Saci-Internal\SaciCheat\x64\Release\templeware.obj

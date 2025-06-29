@@ -14,6 +14,7 @@ namespace Config {
 	bool showNameTags = false;
 	bool Radar = false;		
 	bool Night = false;
+	bool GrenadePrediction = false;
 
 	bool enemyChamsInvisible = false;
 	bool enemyChams = false;

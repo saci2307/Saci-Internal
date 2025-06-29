@@ -111,7 +111,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>d3d11.lib;kernel32.lib;dxgi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -171,6 +171,7 @@
     <ClCompile Include="source\cs2\entity\C_CSWeaponBase\C_CSWeaponBase.cpp" />
     <ClCompile Include="source\templeware\features\trigger\trigger.cpp" />
     <ClCompile Include="source\templeware\features\radar\radar.cpp" />
+    <ClCompile Include="source\templeware\features\Grenade\grenadeprediction.cpp" />
     <ClCompile Include="source\templeware\features\chams\chams.cpp" />
     <ClCompile Include="source\templeware\features\visuals\fov\fov.cpp" />
     <ClCompile Include="source\templeware\interfaces\CGameEntitySystem\CGameEntitySystem.cpp" />
@@ -188,6 +189,8 @@
     <ClCompile Include="source\templeware\utils\memory\gaa\gaa.cpp" />
     <ClCompile Include="source\templeware\utils\memory\patternscan\patternscan.cpp" />
     <ClCompile Include="source\templeware\utils\module\module.cpp" />
+    <ClCompile Include="source\templeware\utils\render\textureloader.cpp" />
+    <ClCompile Include="source\templeware\utils\render\stb_image_impl.cpp" />
     <ClCompile Include="source\templeware\players\hook\playerHook.cpp" />
     <ClCompile Include="source\templeware\players\players.cpp" />
     <ClCompile Include="source\templeware\templeware.cpp" />
@@ -229,6 +232,7 @@
     <ClInclude Include="source\templeware\features\trigger\trigger.h" />
     <ClInclude Include="source\templeware\features\trigger\trigger_utils.h" />
     <ClInclude Include="source\templeware\features\radar\radar.h" />
+    <ClInclude Include="source\templeware\features\Grenade\grenadeprediction.h" />
     <ClInclude Include="source\templeware\interfaces\CGameEntitySystem\CGameEntitySystem.h" />
     <ClInclude Include="source\templeware\interfaces\IEngineClient\IEngineClient.h" />
     <ClInclude Include="source\templeware\interfaces\interfaces.h" />
@@ -241,6 +245,7 @@
     <ClInclude Include="source\templeware\menu\hud.h" />
     <ClInclude Include="source\templeware\offsets\offsets.h" />
     <ClInclude Include="source\templeware\renderer\icons.h" />
+    <ClInclude Include="source\templeware\utils\physics\trace.h" />
     <ClInclude Include="source\templeware\utils\fnv1a\fnv1a.h" />
     <ClInclude Include="source\templeware\utils\logging\log.h" />
     <ClInclude Include="source\templeware\utils\math\math.h" />
@@ -252,6 +257,7 @@
     <ClInclude Include="source\templeware\utils\math\viewmatrix\viewmatrix.h" />
     <ClInclude Include="source\templeware\utils\memory\gaa\gaa.h" />
     <ClInclude Include="source\templeware\utils\memory\Interface\Interface.h" />
+    <ClInclude Include="source\templeware\utils\render\textureloader.h" />
     <ClInclude Include="source\templeware\utils\memory\memorycommon.h" />
     <ClInclude Include="source\templeware\utils\memory\patternscan\patternscan.h" />
     <ClInclude Include="source\templeware\utils\memory\vfunc\vfunc.h" />
@@ -264,6 +270,7 @@
     <ClInclude Include="source\globals\globals.h" />
     <ClInclude Include="source\offsets\offsets.h" />
     <ClInclude Include="source\includes.h" />
+    <ClInclude Include="external\stb_image\stb_image.h" />
     <ClInclude Include="external\kiero\kiero.h" />
     <ClInclude Include="external\kiero\minhook\include\MinHook.h" />
     <ClInclude Include="external\kiero\minhook\src\buffer.h" />
